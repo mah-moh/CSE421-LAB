@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
     public static void main(String [] args){
@@ -15,8 +16,22 @@ public class Client {
 
             DataInputStream din = new DataInputStream(socket.getInputStream());
             InputStreamReader reader = new InputStreamReader(din);
-            
+
+            Scanner sc = new Scanner(System.in);
+
             socket.close();
+
+            while(true) {
+                System.out.println("Write here");
+                String input = sc.nextLine();
+
+                dout.writeUTF(input);
+                dout.flush();
+                String response = din.readUTF();
+                if (response == "stop"){
+                    break;
+                }
+            }
 
         }catch(Exception e){
             System.out.println(e);
