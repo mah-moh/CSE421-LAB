@@ -1,16 +1,15 @@
-import java.net.*;
-import java.io.*;
+import java.net.Socket;
 
-public class Server{
-    public static void main(String [] args){
-        try{
-            while(true){
-                ServerSocket ss = new ServerSocket(8888);
-                System.out.println("Server is running on port : 8888");
+public class ServerThread extends Thread{
 
-                Socket socket = ss.accept();
+    private Socket socket;
 
-                DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
+    ServerThread(Socket socket){
+        this.socket = socket;
+    }
+
+    public void run(){
+        DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
 
                 DataInputStream din = new DataInputStream((socket.getInputStream()));
 
@@ -28,12 +27,5 @@ public class Server{
                     }
                     
                 }
-
-                ss.close();
-            }
-
-        }catch(Exception e){
-            System.out.println(e);
-        }
     }
 }
